@@ -47,10 +47,14 @@ for i = 1:maxiter
     y_new = sigmoid(data * weights);
     R_vec = y_new .* (1 - y_new);
     R = diag(R_vec);
-    z = data * weights - R^-1 * (y_new - labels');
+    z = data * weights - R^-1 * (y_new - labels);
+    %if rank(data) < min(size(data))
+        %disp('data is rank-deficient')
+        %continue
+    %end
     weights = weights - (data' * R * data)^-1 * data' * R * z;
     
-    if sum((y_new - y) / size(y, 1)) < epsilon
+    if sum(y_new - y) / size(y, 1) < epsilon
         break
     end
     y = y_new;
