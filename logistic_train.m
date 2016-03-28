@@ -36,21 +36,21 @@ else
     return
 end
 
-weights = zeros(size(data, 2));
-y = zeros(size(data, 2));
+weights = zeros(size(data, 2), 1);
+y = zeros(size(data, 1), 1);
 sigmoid = @(a) (1 + exp(-1 * a));
 
 for i = 1:maxiter
     % Build the R matrix by calculating the y_n entries, then the entries
     % along the diagonal, and finally by turning the vector into the
     % matrix's diagonal.
-    y_new = sigmoid(weights' * data);
-    R_vec = y_new * (1 - y_new);
+    y_new = sigmoid(data * weights);
+    R_vec = y_new .* (1 - y_new);
     R = diag(R_vec);
-    z = data * weights - R^-1 * (y_new - labels);
+    z = data * weights - R^-1 * (y_new - labels');
     weights = weights - (data' * R * data)^-1 * data' * R * z;
     
-    if sum(y_new - y) / size(y, 1) < epsilon
+    if sum((y_new - y) / size(y, 1)) < epsilon
         break
     end
     y = y_new;
