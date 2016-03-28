@@ -50,7 +50,7 @@ for i = 1:maxiter
     z = data * weights - R^-1 * (y_new - labels);
     weights = weights - (data' * R * data)^-1 * data' * R * z;
     
-    if sum(y_new - y) / size(y, 1) < epsilon:
+    if sum(y_new - y) / size(y, 1) < epsilon
         break
     end
     y = y_new;
