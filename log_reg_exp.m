@@ -11,4 +11,8 @@ sizes = [200, 500, 800, 1000, 1500, 2000];
 
  for size = sizes
      weights = logistic_train(train_data(1:size), labels(1:size));
+     predictions = test_data * weights;
+     errors = abs(test_labels - predictions);
+     test_error = errors / size(test_labels, 1);
+     disp(test_error);
  end
