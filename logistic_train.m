@@ -38,19 +38,18 @@ end
 
 weights = zeros(size(data, 2), 1);
 y_new = zeros(size(data, 1), 1);
-sigmoid = @(a) (1 + exp(-1 * a));
 
 for i = 1:maxiter
     % Build the R matrix by calculating the y_n entries, then the entries
     % along the diagonal, and finally by turning the vector into the
     % matrix's diagonal.
-    y_old = sigmoid(data * weights);
+    y_old = sigmf(data * weights, [1 0]);
     R_vec = y_old .* (1 - y_old);
     R = diag(R_vec);
-    z = data * weights - R^-1 * (y_old - labels);
+    z = data * weights - inv(R + 0.1*eye(size(R, 1))) * (y_old - labels);
 
-    weights = weights - (data' * R * data)^-1 * data' * R * z;
-    y_new = sigmoid(data * weights);
+    weights = weights - inv(data' * R * data) * data' * R * z;
+    y_new = sigmf(data * weights, [1 0]);
     if sum(abs(y_old - y_new)) / size(y_new, 1) < epsilon
         break
     end

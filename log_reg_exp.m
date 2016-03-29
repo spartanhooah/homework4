@@ -12,11 +12,11 @@ accuracies = [];
 
 for amount = amounts
     weights = logistic_train(data(1:amount, :), labels(1:amount));
-    m_weights = glmfit(data(1:amount, 2:end), labels(1:amount), 'binomial');
-    predictions = test_data * weights;
-    m_predictions = test_data * m_weights;
-    errors = sum(abs(test_labels - predictions));
-    test_error = errors / size(test_labels, 1);
+    
+    predictions = sigmf(test_data * weights, [1 0]);
+    
+    errors = test_labels == t_predictions;
+    test_error = sum(errors) / length(errors);
     accuracies = [accuracies, test_error];
 end
 
