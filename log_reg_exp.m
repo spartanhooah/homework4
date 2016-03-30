@@ -20,4 +20,6 @@ for amount = amounts
 end
 
 plot(amounts, accuracies)
-%axis([200, 2000, 0.98, 1])
+title('{\bf Testing Accuracy vs. Training Set Size}')
+xlabel('Training set size')
+ylabel('Testing accuracy')
