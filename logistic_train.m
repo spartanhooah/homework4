@@ -35,23 +35,3 @@ else
     disp('Too many arguments given.')
     return
 end
-
-weights = zeros(size(data, 2), 1);
-y_new = zeros(size(data, 1), 1);
-
-for i = 1:maxiter
-    % Build the R matrix by calculating the y_n entries, then the entries
-    % along the diagonal, and finally by turning the vector into the
-    % matrix's diagonal.
-    y_old = sigmf(data * weights, [1 0]);
-    R_vec = y_old .* (1 - y_old);
-    R = diag(R_vec);
-    z = data * weights - inv(R + 0.2*eye(size(R, 1))) * (y_old - labels);
-
-    weights = weights - inv(data' * R * data) * data' * R * z;
-    y_new = sigmf(data * weights, [1 0]);
-    if sum(abs(y_old - y_new)) / size(y_new, 1) < epsilon
-        break
-    end
-    y_old = y_new;
-end
