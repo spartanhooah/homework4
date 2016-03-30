@@ -35,3 +35,16 @@ else
     disp('Too many arguments given.')
     return
 end
+
+weights = zeros(size(data, 2), 1);
+
+for i = 1:maxiter
+    y_old = sigmf(data * weights, [1 0]);
+    R = diag(y_old .* (1 - y_old));
+    z = data * weights - (R + 0.1*eye(size(R, 1)))^-1 * (y_old - labels);
+    weights = (data' * R * data)^-1 * data' * R * z;
+    y_new = sigmf(data * weights, [1 0]);
+    if mean(abs(y_old - y_new)) < epsilon
+        break
+    end
+end
