@@ -12,13 +12,12 @@ accuracies = [];
 
 for amount = amounts
     weights = logistic_train(data(1:amount, :), labels(1:amount));
+    predictions = sigmf(test_data * weights, [1 0]) >= 0.5;
     
-    predictions = sigmf(test_data * weights, [1 0]);
-    
-    errors = test_labels == t_predictions;
-    test_error = sum(errors) / length(errors);
-    accuracies = [accuracies, test_error];
+    errors = test_labels ~= predictions;
+    accuracy = sum(errors) / numel(errors);
+    accuracies = [accuracies, accuracy];
 end
 
 plot(amounts, accuracies)
-axis([200, 2000, 0.98, 1])
+%axis([200, 2000, 0.98, 1])

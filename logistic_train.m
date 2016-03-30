@@ -46,7 +46,7 @@ for i = 1:maxiter
     y_old = sigmf(data * weights, [1 0]);
     R_vec = y_old .* (1 - y_old);
     R = diag(R_vec);
-    z = data * weights - inv(R + 0.1*eye(size(R, 1))) * (y_old - labels);
+    z = data * weights - inv(R + 0.2*eye(size(R, 1))) * (y_old - labels);
 
     weights = weights - inv(data' * R * data) * data' * R * z;
     y_new = sigmf(data * weights, [1 0]);
