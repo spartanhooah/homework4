@@ -1,17 +1,19 @@
 clear
-data = load('data.txt');
-labels = load('labels.txt');
-data = [ones(size(data, 1), 1), data];
+load('ad_data.mat');
 
-train_data = data(1:50, :);
-train_labels = labels(1:50, :);
-test_data = data(2001:4601, :);
-test_labels = labels(2001:4601);
+% Add bias
+X_train = [ones(size(X_train, 1), 1) X_train];
+y_train = [ones(size(y_train, 1), 1) y_train];
 
-pars = [0.01, 0.02, 0.05, 0.1, 0.2, 0.5];
-
+pars = [0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+num_selected = zeros(size(pars));
+AUCs = zeros(size(pars));
+i = 1;
 for par = pars
-    [weights, bias] = logistic_l1_train(train_data, train_labels, par);
-    predictions = test_data * weights;
-    disp(nnz(weights))
+    [weights, bias] = logistic_l1_train(X_train, y_train, par);
+    num_selected(i) = nnz(weights);
+    predictions = x_test * weights;
+    [X, Y, T, AUC] = perfcurve(y_test, predictions, 1);
+    AUCs(i) = AUC;
+    i = i + 1;
 end
