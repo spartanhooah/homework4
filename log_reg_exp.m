@@ -14,7 +14,7 @@ for amount = amounts
     weights = logistic_train(data(1:amount, :), labels(1:amount));
     predictions = sigmf(test_data * weights, [1 0]) >= 0.5;
     
-    errors = test_labels ~= predictions;
+    errors = test_labels == predictions;
     accuracy = sum(errors) / numel(errors);
     accuracies = [accuracies, accuracy];
 end
