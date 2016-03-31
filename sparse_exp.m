@@ -17,3 +17,14 @@ for par = pars
     AUCs(i) = AUC;
     i = i + 1;
 end
+
+plot(pars, num_selected)
+title('{\bf Count of Non-zero Weights vs. Regularization Parameter}')
+xlabel('Regularization Parameter')
+ylabel('Count')
+
+figure
+plot(pars, AUCs)
+title('{\bf Area Under Curve vs. Regularization Parameter}')
+xlabel('Regularization Parameter')
+ylabel('AUC')
