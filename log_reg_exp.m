@@ -19,7 +19,7 @@ for amount = amounts
     accuracies = [accuracies, accuracy];
 end
 
-plot(amounts, accuracies)
+plot(amounts, accuracies, '-x')
 title('{\bf Testing Accuracy vs. Training Set Size}')
 xlabel('Training set size')
 ylabel('Testing accuracy')

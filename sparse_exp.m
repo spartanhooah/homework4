@@ -18,13 +18,13 @@ for par = pars
     i = i + 1;
 end
 
-plot(pars, num_selected)
+plot(pars, num_selected, '-x')
 title('{\bf Count of Non-zero Weights vs. Regularization Parameter}')
 xlabel('Regularization Parameter')
 ylabel('Count')
 
 figure
-plot(pars, AUCs)
+plot(pars, AUCs, '-x')
 title('{\bf Area Under Curve vs. Regularization Parameter}')
 xlabel('Regularization Parameter')
 ylabel('AUC')
