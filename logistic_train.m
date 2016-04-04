@@ -44,6 +44,8 @@ for i = 1:maxiter
     z = data * weights - (R + 0.1*eye(size(R, 1)))^-1 * (y_old - labels);
     weights = (data' * R * data)^-1 * data' * R * z;
     y_new = sigmf(data * weights, [1 0]);
+    
+    % Check tolerance
     if mean(abs(y_old - y_new)) < epsilon
         break
     end
